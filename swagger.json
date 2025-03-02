@@ -1,1254 +1,1844 @@
-openapi: 3.0.3
-info:
-  title: Skillcast Reporting
-  description: This API is used to access reporting data from your Skillcast instance
-  version: 1.0.1
-  termsOfService: https://www.skillcast.com/terms-of-service
-  contact:
-    email: support@skillcast.com
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Skillcast Reporting",
+    "description": "This API is used to access reporting data from your Skillcast instance",
+    "version": "1.0.1",
+    "termsOfService": "https://www.skillcast.com/terms-of-service",
+    "contact": {
+      "email": "support@skillcast.com"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://devjack.skillcaststaging.io/api/reporting/v1"
+    }
+  ],
 
-servers:
-  - url: https://devjack.skillcaststaging.io/api/reporting/v1
+  "tags": [
+    {
+      "name": "Assignments",
+      "description": "Assignment reporting endpoints"
+    },
+    {
+      "name": "Employees",
+      "description": "Employee data endpoints"
+    },
+    {
+      "name": "E-learning",
+      "description": "E-learning activity reporting"
+    },
+    {
+      "name": "Policies",
+      "description": "Policy reporting endpoints"
+    },
+    {
+      "name": "Events",
+      "description": "Event reporting endpoints"
+    },
+    {
+      "name": "Offline activities",
+      "description": "Offline activity reporting endpoints"
+    },
+    {
+      "name": "CPD",
+      "description": "Continuing Professional Development reporting"
+    },
+    {
+      "name": "Assessments",
+      "description": "Assessment reporting endpoints"
+    }
+  ],
 
-tags:
-  - name: Assignments
-    description: Assignment reporting endpoints
-  - name: Employees
-    description: Employee data endpoints
-  - name: E-learning
-    description: E-learning activity reporting
-  - name: Policies
-    description: Policy reporting endpoints
-  - name: Events
-    description: Event reporting endpoints
-  - name: Offline activities
-    description: Offline activity reporting endpoints
-  - name: CPD
-    description: Continuing Professional Development reporting
-  - name: Assessments
-    description: Assessment reporting endpoints
+  "components": {
+    "schemas": {
+      "filters": {
+        "type": "object",
+        "properties": {
+          "filters": {
+            "type": "object",
+            "properties": {
+              "keyword": {
+                "type": "string",
+                "description": "Search employee name/email/id"
+              }
+            }
+          }
+        }
+      }
+    },
+    "responses": {
+      "StandardSuccess": {
+        "description": "Successful operation"
+      },
+      "Unauthorized": {
+        "description": "Access denied"
+      },
+      "NotFound": {
+        "description": "Invalid path"
+      },
+      "MethodNotAllowed": {
+        "description": "Invalid method"
+      },
+      "ValidationError": {
+        "description": "Invalid request"
+      }
+    }
+  },
 
-components:
-  schemas:
-    filters:
-      type: object
-      properties:
-        filters:
-          type: object
-          properties:
-            keyword:
-              type: string
-              description: Search employee name/email/id
-  
-  responses:
-    StandardSuccess:
-      description: Successful operation
-    Unauthorized:
-      description: Access denied
-    NotFound:
-      description: Invalid path
-    MethodNotAllowed:
-      description: Invalid method
-    ValidationError:
-      description: Invalid request
-
-paths:
-  /elearning:
-    post:
-      tags:
-        - E-learning
-      summary: Get e-learning records
-      parameters:
-        - name: limit
-          in: query
-          required: false
-          schema:
-            type: number
-          description: Maximum number of records to return
-        - name: offset
-          in: query
-          required: false
-          schema:
-            type: number
-          description: First record to return
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/filters'
-      responses:
-        '200':
-          $ref: '#/components/responses/StandardSuccess'
-        '401':
-          $ref: '#/components/responses/Unauthorized'
-        '404':
-          $ref: '#/components/responses/NotFound'
-        '405':
-          $ref: '#/components/responses/MethodNotAllowed'
-        '422':
-          $ref: '#/components/responses/ValidationError'
-
-  /elearning/states:
-    post:
-      tags:
-        - E-learning
-      summary: Get e-learning states
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/filters'
-      responses:
-        '200':
-          $ref: '#/components/responses/StandardSuccess'
-        '401':
-          $ref: '#/components/responses/Unauthorized'
-        '404':
-          $ref: '#/components/responses/NotFound'
-        '405':
-          $ref: '#/components/responses/MethodNotAllowed'
-        '422':
-          $ref: '#/components/responses/ValidationError'
-
-  /elearning/states/{statusCode}:
-    post:
-      tags:
-        - E-learning
-      summary: Get e-learning by status
-      parameters:
-        - name: statusCode
-          in: path
-          required: true
-          schema:
-            type: string
-          description: State
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/filters'
-      responses:
-        '200':
-          $ref: '#/components/responses/StandardSuccess'
-        '401':
-          $ref: '#/components/responses/Unauthorized'
-        '404':
-          $ref: '#/components/responses/NotFound'
-        '405':
-          $ref: '#/components/responses/MethodNotAllowed'
-        '422':
-          $ref: '#/components/responses/ValidationError'
-
-  /elearning/titles:
-    post:
-      tags:
-        - E-learning
-      summary: Get e-learning titles
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/filters'
-      responses:
-        '200':
-          $ref: '#/components/responses/StandardSuccess'
-        '401':
-          $ref: '#/components/responses/Unauthorized'
-        '404':
-          $ref: '#/components/responses/NotFound'
-        '405':
-          $ref: '#/components/responses/MethodNotAllowed'
-        '422':
-          $ref: '#/components/responses/ValidationError'
-
-  /elearning/titles/{scoId}:
-    post:
-      tags:
-        - E-learning
-      summary: Get e-learning by title ID
-      parameters:
-        - name: scoId
-          in: path
-          required: true
-          schema:
-            type: string
-          description: Activity ID
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/filters'
-      responses:
-        '200':
-          $ref: '#/components/responses/StandardSuccess'
-        '401':
-          $ref: '#/components/responses/Unauthorized'
-        '404':
-          $ref: '#/components/responses/NotFound'
-        '405':
-          $ref: '#/components/responses/MethodNotAllowed'
-        '422':
-          $ref: '#/components/responses/ValidationError'
-
-  /employees:
-    post:
-      tags:
-        - Employees
-      summary: Get employee data
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/filters'
-      responses:
-        '200':
-          $ref: '#/components/responses/StandardSuccess'
-        '401':
-          $ref: '#/components/responses/Unauthorized'
-        '404':
-          $ref: '#/components/responses/NotFound'
-        '405':
-          $ref: '#/components/responses/MethodNotAllowed'
-        '422':
-          $ref: '#/components/responses/ValidationError'
-
-  /employees/{userId}:
-    get:
-      tags:
-        - Employees
-      summary: Get employee by ID
-      parameters:
-        - name: userId
-          in: path
-          required: true
-          schema:
-            type: string
-          description: Skillcast User ID
-      responses:
-        '200':
-          $ref: '#/components/responses/StandardSuccess'
-        '401':
-          $ref: '#/components/responses/Unauthorized'
-        '404':
-          $ref: '#/components/responses/NotFound'
-        '405':
-          $ref: '#/components/responses/MethodNotAllowed'
-        '422':
-          $ref: '#/components/responses/ValidationError'
-
-  /employees/{userId}/assignments:
-    get:
-      tags:
-        - Employees
-      summary: Get employee assignments
-      parameters:
-        - name: userId
-          in: path
-          required: true
-          schema:
-            type: string
-          description: Skillcast User ID
-        - name: limit
-          in: query
-          required: false
-          schema:
-            type: number
-          description: Maximum number of records to return
-        - name: offset
-          in: query
-          required: false
-          schema:
-            type: number
-          description: First record to return
-      responses:
-        '200':
-          $ref: '#/components/responses/StandardSuccess'
-        '401':
-          $ref: '#/components/responses/Unauthorized'
-        '404':
-          $ref: '#/components/responses/NotFound'
-        '405':
-          $ref: '#/components/responses/MethodNotAllowed'
-        '422':
-          $ref: '#/components/responses/ValidationError'
-
-  /employees/{userId}/assignments/states:
-    get:
-      tags:
-        - Employees
-      summary: Get employee assignment states
-      parameters:
-        - name: userId
-          in: path
-          required: true
-          schema:
-            type: string
-          description: Skillcast User ID
-      responses:
-        '200':
-          $ref: '#/components/responses/StandardSuccess'
-        '401':
-          $ref: '#/components/responses/Unauthorized'
-        '404':
-          $ref: '#/components/responses/NotFound'
-        '405':
-          $ref: '#/components/responses/MethodNotAllowed'
-        '422':
-          $ref: '#/components/responses/ValidationError'
-
-  /employees/{userId}/assignments/states/{status}:
-    get:
-      tags:
-        - Employees
-      summary: Get employee assignments by state
-      parameters:
-        - name: userId
-          in: path
-          required: true
-          schema:
-            type: string
-          description: Skillcast User ID
-        - name: status
-          in: path
-          required: true
-          schema:
-            type: string
-          description: State
-      responses:
-        '200':
-          $ref: '#/components/responses/StandardSuccess'
-        '401':
-          $ref: '#/components/responses/Unauthorized'
-        '404':
-          $ref: '#/components/responses/NotFound'
-        '405':
-          $ref: '#/components/responses/MethodNotAllowed'
-        '422':
-          $ref: '#/components/responses/ValidationError'
-
-  /employees/{userId}/assignments/learningpaths:
-    get:
-      tags:
-        - Employees
-      summary: Get employee learning paths
-      parameters:
-        - name: userId
-          in: path
-          required: true
-          schema:
-            type: string
-          description: Skillcast User ID
-      responses:
-        '200':
-          $ref: '#/components/responses/StandardSuccess'
-        '401':
-          $ref: '#/components/responses/Unauthorized'
-        '404':
-          $ref: '#/components/responses/NotFound'
-        '405':
-          $ref: '#/components/responses/MethodNotAllowed'
-        '422':
-          $ref: '#/components/responses/ValidationError'
-
-  /employees/{userId}/assignments/learningpaths/{lpId}:
-    get:
-      tags:
-        - Employees
-      summary: Get employee learning path details
-      parameters:
-        - name: userId
-          in: path
-          required: true
-          schema:
-            type: string
-          description: Skillcast User ID
-        - name: lpId
-          in: path
-          required: true
-          schema:
-            type: string
-          description: Learning Path ID
-      responses:
-        '200':
-          $ref: '#/components/responses/StandardSuccess'
-        '401':
-          $ref: '#/components/responses/Unauthorized'
-        '404':
-          $ref: '#/components/responses/NotFound'
-        '405':
-          $ref: '#/components/responses/MethodNotAllowed'
-        '422':
-          $ref: '#/components/responses/ValidationError'
-
-  /employees/{userId}/cpd/{year}:
-    get:
-      tags:
-        - Employees
-      summary: Get employee CPD records for a year
-      parameters:
-        - name: userId
-          in: path
-          required: true
-          schema:
-            type: string
-          description: Skillcast User ID
-        - name: year
-          in: path
-          required: true
-          schema:
-            type: number
-          description: Year
-      responses:
-        '200':
-          $ref: '#/components/responses/StandardSuccess'
-        '401':
-          $ref: '#/components/responses/Unauthorized'
-        '404':
-          $ref: '#/components/responses/NotFound'
-        '405':
-          $ref: '#/components/responses/MethodNotAllowed'
-        '422':
-          $ref: '#/components/responses/ValidationError'
-
-  /employees/{userId}/cpd/{year}/{cpdId}:
-    get:
-      tags:
-        - Employees
-      summary: Get employee CPD scheme details
-      parameters:
-        - name: userId
-          in: path
-          required: true
-          schema:
-            type: string
-          description: Skillcast User ID
-        - name: year
-          in: path
-          required: true
-          schema:
-            type: number
-          description: Year
-        - name: cpdId
-          in: path
-          required: true
-          schema:
-            type: string
-          description: CPD scheme ID
-      responses:
-        '200':
-          $ref: '#/components/responses/StandardSuccess'
-        '401':
-          $ref: '#/components/responses/Unauthorized'
-        '404':
-          $ref: '#/components/responses/NotFound'
-        '405':
-          $ref: '#/components/responses/MethodNotAllowed'
-        '422':
-          $ref: '#/components/responses/ValidationError'
-
-  /employees/{userId}/activities:
-    get:
-      tags:
-        - Employees
-      summary: Get employee activities
-      parameters:
-        - name: userId
-          in: path
-          required: true
-          schema:
-            type: string
-          description: Skillcast User ID
-        - name: limit
-          in: query
-          required: false
-          schema:
-            type: number
-          description: Maximum number of records to return
-        - name: offset
-          in: query
-          required: false
-          schema:
-            type: number
-          description: First record to return
-      responses:
-        '200':
-          $ref: '#/components/responses/StandardSuccess'
-        '401':
-          $ref: '#/components/responses/Unauthorized'
-        '404':
-          $ref: '#/components/responses/NotFound'
-        '405':
-          $ref: '#/components/responses/MethodNotAllowed'
-        '422':
-          $ref: '#/components/responses/ValidationError'
-
-  /employees/{userId}/activities/states:
-    get:
-      tags:
-        - Employees
-      summary: Get employee activity states
-      parameters:
-        - name: userId
-          in: path
-          required: true
-          schema:
-            type: string
-          description: Skillcast User ID
-      responses:
-        '200':
-          $ref: '#/components/responses/StandardSuccess'
-        '401':
-          $ref: '#/components/responses/Unauthorized'
-        '404':
-          $ref: '#/components/responses/NotFound'
-        '405':
-          $ref: '#/components/responses/MethodNotAllowed'
-        '422':
-          $ref: '#/components/responses/ValidationError'
-
-  /employees/{userId}/activities/states/{statusCode}:
-    get:
-      tags:
-        - Employees
-      summary: Get employee activities by state
-      parameters:
-        - name: userId
-          in: path
-          required: true
-          schema:
-            type: string
-          description: Skillcast User ID
-        - name: statusCode
-          in: path
-          required: true
-          schema:
-            type: string
-          description: State
-      responses:
-        '200':
-          $ref: '#/components/responses/StandardSuccess'
-        '401':
-          $ref: '#/components/responses/Unauthorized'
-        '404':
-          $ref: '#/components/responses/NotFound'
-        '405':
-          $ref: '#/components/responses/MethodNotAllowed'
-        '422':
-          $ref: '#/components/responses/ValidationError'
-
-  /employees/{userId}/activities/titles:
-    get:
-      tags:
-        - Employees
-      summary: Get employee activity titles
-      parameters:
-        - name: userId
-          in: path
-          required: true
-          schema:
-            type: string
-          description: Skillcast User ID
-      responses:
-        '200':
-          $ref: '#/components/responses/StandardSuccess'
-        '401':
-          $ref: '#/components/responses/Unauthorized'
-        '404':
-          $ref: '#/components/responses/NotFound'
-        '405':
-          $ref: '#/components/responses/MethodNotAllowed'
-        '422':
-          $ref: '#/components/responses/ValidationError'
-
-  /employees/{userId}/activities/titles/{scoId}:
-    get:
-      tags:
-        - Employees
-      summary: Get employee activities by title
-      parameters:
-        - name: userId
-          in: path
-          required: true
-          schema:
-            type: string
-          description: Skillcast User ID
-        - name: scoId
-          in: path
-          required: true
-          schema:
-            type: string
-          description: Activity ID
-      responses:
-        '200':
-          $ref: '#/components/responses/StandardSuccess'
-        '401':
-          $ref: '#/components/responses/Unauthorized'
-        '404':
-          $ref: '#/components/responses/NotFound'
-        '405':
-          $ref: '#/components/responses/MethodNotAllowed'
-        '422':
-          $ref: '#/components/responses/ValidationError'
-
-  /assignments:
-    post:
-      tags:
-        - Assignments
-      summary: Get assignment data
-      parameters:
-        - name: limit
-          in: query
-          required: false
-          schema:
-            type: number
-          description: Maximum number of records to return
-        - name: offset
-          in: query
-          required: false
-          schema:
-            type: number
-          description: First record to return
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/filters'
-      responses:
-        '200':
-          $ref: '#/components/responses/StandardSuccess'
-        '401':
-          $ref: '#/components/responses/Unauthorized'
-        '404':
-          $ref: '#/components/responses/NotFound'
-        '405':
-          $ref: '#/components/responses/MethodNotAllowed'
-        '422':
-          $ref: '#/components/responses/ValidationError'
-
-  /assignments/states:
-    post:
-      tags:
-        - Assignments
-      summary: Get assignment states
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/filters'
-      responses:
-        '200':
-          $ref: '#/components/responses/StandardSuccess'
-        '401':
-          $ref: '#/components/responses/Unauthorized'
-        '404':
-          $ref: '#/components/responses/NotFound'
-        '405':
-          $ref: '#/components/responses/MethodNotAllowed'
-        '422':
-          $ref: '#/components/responses/ValidationError'
-
-  /assignments/states/{statusCode}:
-    post:
-      tags:
-        - Assignments
-      summary: Get assignments by state
-      parameters:
-        - name: statusCode
-          in: path
-          required: true
-          schema:
-            type: string
-          description: State
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/filters'
-      responses:
-        '200':
-          $ref: '#/components/responses/StandardSuccess'
-        '401':
-          $ref: '#/components/responses/Unauthorized'
-        '404':
-          $ref: '#/components/responses/NotFound'
-        '405':
-          $ref: '#/components/responses/MethodNotAllowed'
-        '422':
-          $ref: '#/components/responses/ValidationError'
-
-  /assignments/titles:
-    post:
-      tags:
-        - Assignments
-      summary: Get assignment titles
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/filters'
-      responses:
-        '200':
-          $ref: '#/components/responses/StandardSuccess'
-        '401':
-          $ref: '#/components/responses/Unauthorized'
-        '404':
-          $ref: '#/components/responses/NotFound'
-        '405':
-          $ref: '#/components/responses/MethodNotAllowed'
-        '422':
-          $ref: '#/components/responses/ValidationError'
-
-  /assignments/titles/{scoId}:
-    post:
-      tags:
-        - Assignments
-      summary: Get assignments by title
-      parameters:
-        - name: scoId
-          in: path
-          required: true
-          schema:
-            type: string
-          description: Activity ID
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/filters'
-      responses:
-        '200':
-          $ref: '#/components/responses/StandardSuccess'
-        '401':
-          $ref: '#/components/responses/Unauthorized'
-        '404':
-          $ref: '#/components/responses/NotFound'
-        '405':
-          $ref: '#/components/responses/MethodNotAllowed'
-        '422':
-          $ref: '#/components/responses/ValidationError'
-
-  /cpd/{year}:
-    post:
-      tags:
-        - CPD
-      summary: Get CPD data for a year
-      parameters:
-        - name: year
-          in: path
-          required: true
-          schema:
-            type: number
-          description: Year
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/filters'
-      responses:
-        '200':
-          $ref: '#/components/responses/StandardSuccess'
-        '401':
-          $ref: '#/components/responses/Unauthorized'
-        '404':
-          $ref: '#/components/responses/NotFound'
-        '405':
-          $ref: '#/components/responses/MethodNotAllowed'
-        '422':
-          $ref: '#/components/responses/ValidationError'
-
-  /cpd/{year}/{cpdId}:
-    post:
-      tags:
-        - CPD
-      summary: Get CPD scheme data
-      parameters:
-        - name: year
-          in: path
-          required: true
-          schema:
-            type: number
-          description: Year
-        - name: cpdId
-          in: path
-          required: true
-          schema:
-            type: string
-          description: CPD scheme ID
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/filters'
-      responses:
-        '200':
-          $ref: '#/components/responses/StandardSuccess'
-        '401':
-          $ref: '#/components/responses/Unauthorized'
-        '404':
-          $ref: '#/components/responses/NotFound'
-        '405':
-          $ref: '#/components/responses/MethodNotAllowed'
-        '422':
-          $ref: '#/components/responses/ValidationError'
-
-  /policies:
-    post:
-      tags:
-        - Policies
-      summary: Get policy data
-      parameters:
-        - name: limit
-          in: query
-          required: false
-          schema:
-            type: number
-          description: Maximum number of records to return
-        - name: offset
-          in: query
-          required: false
-          schema:
-            type: number
-          description: First record to return
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/filters'
-      responses:
-        '200':
-          $ref: '#/components/responses/StandardSuccess'
-        '401':
-          $ref: '#/components/responses/Unauthorized'
-        '404':
-          $ref: '#/components/responses/NotFound'
-        '405':
-          $ref: '#/components/responses/MethodNotAllowed'
-        '422':
-          $ref: '#/components/responses/ValidationError'
-
-  /policies/states:
-    post:
-      tags:
-        - Policies
-      summary: Get policy states
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/filters'
-      responses:
-        '200':
-          $ref: '#/components/responses/StandardSuccess'
-        '401':
-          $ref: '#/components/responses/Unauthorized'
-        '404':
-          $ref: '#/components/responses/NotFound'
-        '405':
-          $ref: '#/components/responses/MethodNotAllowed'
-        '422':
-          $ref: '#/components/responses/ValidationError'
-
-  /policies/states/{statusCode}:
-    post:
-      tags:
-        - Policies
-      summary: Get policies by state
-      parameters:
-        - name: statusCode
-          in: path
-          required: true
-          schema:
-            type: string
-          description: State
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/filters'
-      responses:
-        '200':
-          $ref: '#/components/responses/StandardSuccess'
-        '401':
-          $ref: '#/components/responses/Unauthorized'
-        '404':
-          $ref: '#/components/responses/NotFound'
-        '405':
-          $ref: '#/components/responses/MethodNotAllowed'
-        '422':
-          $ref: '#/components/responses/ValidationError'
-
-  /policies/titles:
-    post:
-      tags:
-        - Policies
-      summary: Get policy titles
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/filters'
-      responses:
-        '200':
-          $ref: '#/components/responses/StandardSuccess'
-        '401':
-          $ref: '#/components/responses/Unauthorized'
-        '404':
-          $ref: '#/components/responses/NotFound'
-        '405':
-          $ref: '#/components/responses/MethodNotAllowed'
-        '422':
-          $ref: '#/components/responses/ValidationError'
-
-  /policies/titles/{scoId}:
-    post:
-      tags:
-        - Policies
-      summary: Get policies by title
-      parameters:
-        - name: scoId
-          in: path
-          required: true
-          schema:
-            type: string
-          description: Activity ID
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/filters'
-      responses:
-        '200':
-          $ref: '#/components/responses/StandardSuccess'
-        '401':
-          $ref: '#/components/responses/Unauthorized'
-        '404':
-          $ref: '#/components/responses/NotFound'
-        '405':
-          $ref: '#/components/responses/MethodNotAllowed'
-        '422':
-          $ref: '#/components/responses/ValidationError'
-
-  /events:
-    post:
-      tags:
-        - Events
-      summary: Get event data
-      parameters:
-        - name: limit
-          in: query
-          required: false
-          schema:
-            type: number
-          description: Maximum number of records to return
-        - name: offset
-          in: query
-          required: false
-          schema:
-            type: number
-          description: First record to return
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/filters'
-      responses:
-        '200':
-          $ref: '#/components/responses/StandardSuccess'
-        '401':
-          $ref: '#/components/responses/Unauthorized'
-        '404':
-          $ref: '#/components/responses/NotFound'
-        '405':
-          $ref: '#/components/responses/MethodNotAllowed'
-        '422':
-          $ref: '#/components/responses/ValidationError'
-
-  /events/states:
-    post:
-      tags:
-        - Events
-      summary: Get event states
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/filters'
-      responses:
-        '200':
-          $ref: '#/components/responses/StandardSuccess'
-        '401':
-          $ref: '#/components/responses/Unauthorized'
-        '404':
-          $ref: '#/components/responses/NotFound'
-        '405':
-          $ref: '#/components/responses/MethodNotAllowed'
-        '422':
-          $ref: '#/components/responses/ValidationError'
-
-  /events/states/{statusCode}:
-    post:
-      tags:
-        - Events
-      summary: Get events by state
-      parameters:
-        - name: statusCode
-          in: path
-          required: true
-          schema:
-            type: string
-          description: State
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/filters'
-      responses:
-        '200':
-          $ref: '#/components/responses/StandardSuccess'
-        '401':
-          $ref: '#/components/responses/Unauthorized'
-        '404':
-          $ref: '#/components/responses/NotFound'
-        '405':
-          $ref: '#/components/responses/MethodNotAllowed'
-        '422':
-          $ref: '#/components/responses/ValidationError'
-
-  /events/titles:
-    post:
-      tags:
-        - Events
-      summary: Get event titles
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/filters'
-      responses:
-        '200':
-          $ref: '#/components/responses/StandardSuccess'
-        '401':
-          $ref: '#/components/responses/Unauthorized'
-        '404':
-          $ref: '#/components/responses/NotFound'
-        '405':
-          $ref: '#/components/responses/MethodNotAllowed'
-        '422':
-          $ref: '#/components/responses/ValidationError'
-
-  /events/titles/{scoId}:
-    post:
-      tags:
-        - Events
-      summary: Get events by title
-      parameters:
-        - name: scoId
-          in: path
-          required: true
-          schema:
-            type: string
-          description: Activity ID
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/filters'
-      responses:
-        '200':
-          $ref: '#/components/responses/StandardSuccess'
-        '401':
-          $ref: '#/components/responses/Unauthorized'
-        '404':
-          $ref: '#/components/responses/NotFound'
-        '405':
-          $ref: '#/components/responses/MethodNotAllowed'
-        '422':
-          $ref: '#/components/responses/ValidationError'
-
-  /offline:
-    post:
-      tags:
-        - Offline activities
-      summary: Get offline activity data
-      parameters:
-        - name: limit
-          in: query
-          required: false
-          schema:
-            type: number
-          description: Maximum number of records to return
-        - name: offset
-          in: query
-          required: false
-          schema:
-            type: number
-          description: First record to return
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/filters'
-      responses:
-        '200':
-          $ref: '#/components/responses/StandardSuccess'
-        '401':
-          $ref: '#/components/responses/Unauthorized'
-        '404':
-          $ref: '#/components/responses/NotFound'
-        '405':
-          $ref: '#/components/responses/MethodNotAllowed'
-        '422':
-          $ref: '#/components/responses/ValidationError'
-
-  /offline/states:
-    post:
-      tags:
-        - Offline activities
-      summary: Get offline activity states
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/filters'
-      responses:
-        '200':
-          $ref: '#/components/responses/StandardSuccess'
-        '401':
-          $ref: '#/components/responses/Unauthorized'
-        '404':
-          $ref: '#/components/responses/NotFound'
-        '405':
-          $ref: '#/components/responses/MethodNotAllowed'
-        '422':
-          $ref: '#/components/responses/ValidationError'
-
-  /offline/states/{statusCode}:
-    post:
-      tags:
-        - Offline activities
-      summary: Get offline activities by state
-      parameters:
-        - name: statusCode
-          in: path
-          required: true
-          schema:
-            type: string
-          description: State
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/filters'
-      responses:
-        '200':
-          $ref: '#/components/responses/StandardSuccess'
-        '401':
-          $ref: '#/components/responses/Unauthorized'
-        '404':
-          $ref: '#/components/responses/NotFound'
-        '405':
-          $ref: '#/components/responses/MethodNotAllowed'
-        '422':
-          $ref: '#/components/responses/ValidationError'
-
-  /offline/titles:
-    post:
-      tags:
-        - Offline activities
-      summary: Get offline activity titles
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/filters'
-      responses:
-        '200':
-          $ref: '#/components/responses/StandardSuccess'
-        '401':
-          $ref: '#/components/responses/Unauthorized'
-        '404':
-          $ref: '#/components/responses/NotFound'
-        '405':
-          $ref: '#/components/responses/MethodNotAllowed'
-        '422':
-          $ref: '#/components/responses/ValidationError'
-
-  /offline/titles/{scoId}:
-    post:
-      tags:
-        - Offline activities
-      summary: Get offline activities by title
-      parameters:
-        - name: scoId
-          in: path
-          required: true
-          schema:
-            type: string
-          description: Activity ID
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/filters'
-      responses:
-        '200':
-          $ref: '#/components/responses/StandardSuccess'
-        '401':
-          $ref: '#/components/responses/Unauthorized'
-        '404':
-          $ref: '#/components/responses/NotFound'
-        '405':
-          $ref: '#/components/responses/MethodNotAllowed'
-        '422':
-          $ref: '#/components/responses/ValidationError'
-
-  /assessments:
-    post:
-      tags:
-        - Assessments
-      summary: Get assessment data
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/filters'
-      responses:
-        '200':
-          $ref: '#/components/responses/StandardSuccess'
-        '401':
-          $ref: '#/components/responses/Unauthorized'
-        '404':
-          $ref: '#/components/responses/NotFound'
-        '405':
-          $ref: '#/components/responses/MethodNotAllowed'
-        '422':
-          $ref: '#/components/responses/ValidationError'
-
-  /assessments/{scoId}:
-    post:
-      tags:
-        - Assessments
-      summary: Get assessment by ID
-      parameters:
-        - name: scoId
-          in: path
-          required: true
-          schema:
-            type: string
-          description: Activity ID
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/filters'
-      responses:
-        '200':
-          $ref: '#/components/responses/StandardSuccess'
-        '401':
-          $ref: '#/components/responses/Unauthorized'
-        '404':
-          $ref: '#/components/responses/NotFound'
-        '405':
-          $ref: '#/components/responses/MethodNotAllowed'
-        '422':
-          $ref: '#/components/responses/ValidationError'
+  "paths": {
+    "/elearning": {
+      "post": {
+        "tags": ["E-learning"],
+        "summary": "Get e-learning records",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "number"
+            },
+            "description": "Maximum number of records to return"
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "number"
+            },
+            "description": "First record to return"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/filters"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/StandardSuccess"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "405": {
+            "$ref": "#/components/responses/MethodNotAllowed"
+          },
+          "422": {
+            "$ref": "#/components/responses/ValidationError"
+          }
+        }
+      }
+    },
+    "/elearning/states": {
+      "post": {
+        "tags": ["E-learning"],
+        "summary": "Get e-learning states",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/filters"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/StandardSuccess"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "405": {
+            "$ref": "#/components/responses/MethodNotAllowed"
+          },
+          "422": {
+            "$ref": "#/components/responses/ValidationError"
+          }
+        }
+      }
+    },
+    "/elearning/states/{statusCode}": {
+      "post": {
+        "tags": ["E-learning"],
+        "summary": "Get e-learning by status",
+        "parameters": [
+          {
+            "name": "statusCode",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "State"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/filters"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/StandardSuccess"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "405": {
+            "$ref": "#/components/responses/MethodNotAllowed"
+          },
+          "422": {
+            "$ref": "#/components/responses/ValidationError"
+          }
+        }
+      }
+    },
+    "/elearning/titles": {
+      "post": {
+        "tags": ["E-learning"],
+        "summary": "Get e-learning titles",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/filters"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/StandardSuccess"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "405": {
+            "$ref": "#/components/responses/MethodNotAllowed"
+          },
+          "422": {
+            "$ref": "#/components/responses/ValidationError"
+          }
+        }
+      }
+    },
+    "/elearning/titles/{scoId}": {
+      "post": {
+        "tags": ["E-learning"],
+        "summary": "Get e-learning by title ID",
+        "parameters": [
+          {
+            "name": "scoId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Activity ID"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/filters"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/StandardSuccess"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "405": {
+            "$ref": "#/components/responses/MethodNotAllowed"
+          },
+          "422": {
+            "$ref": "#/components/responses/ValidationError"
+          }
+        }
+      }
+    },
+    "/employees": {
+      "post": {
+        "tags": ["Employees"],
+        "summary": "Get employee data",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/filters"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/StandardSuccess"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "405": {
+            "$ref": "#/components/responses/MethodNotAllowed"
+          },
+          "422": {
+            "$ref": "#/components/responses/ValidationError"
+          }
+        }
+      }
+    },
+    "/employees/{userId}": {
+      "get": {
+        "tags": ["Employees"],
+        "summary": "Get employee by ID",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Skillcast User ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/StandardSuccess"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "405": {
+            "$ref": "#/components/responses/MethodNotAllowed"
+          },
+          "422": {
+            "$ref": "#/components/responses/ValidationError"
+          }
+        }
+      }
+    },
+    "/employees/{userId}/assignments": {
+      "get": {
+        "tags": ["Employees"],
+        "summary": "Get employee assignments",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Skillcast User ID"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "number"
+            },
+            "description": "Maximum number of records to return"
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "number"
+            },
+            "description": "First record to return"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/StandardSuccess"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "405": {
+            "$ref": "#/components/responses/MethodNotAllowed"
+          },
+          "422": {
+            "$ref": "#/components/responses/ValidationError"
+          }
+        }
+      }
+    },
+    "/employees/{userId}/assignments/states": {
+      "get": {
+        "tags": ["Employees"],
+        "summary": "Get employee assignment states",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Skillcast User ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/StandardSuccess"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "405": {
+            "$ref": "#/components/responses/MethodNotAllowed"
+          },
+          "422": {
+            "$ref": "#/components/responses/ValidationError"
+          }
+        }
+      }
+    },
+    "/employees/{userId}/assignments/states/{status}": {
+      "get": {
+        "tags": ["Employees"],
+        "summary": "Get employee assignments by state",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Skillcast User ID"
+          },
+          {
+            "name": "status",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "State"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/StandardSuccess"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "405": {
+            "$ref": "#/components/responses/MethodNotAllowed"
+          },
+          "422": {
+            "$ref": "#/components/responses/ValidationError"
+          }
+        }
+      }
+    },
+    "/employees/{userId}/assignments/learningpaths": {
+      "get": {
+        "tags": ["Employees"],
+        "summary": "Get employee learning paths",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Skillcast User ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/StandardSuccess"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "405": {
+            "$ref": "#/components/responses/MethodNotAllowed"
+          },
+          "422": {
+            "$ref": "#/components/responses/ValidationError"
+          }
+        }
+      }
+    },
+    "/employees/{userId}/assignments/learningpaths/{lpId}": {
+      "get": {
+        "tags": ["Employees"],
+        "summary": "Get employee learning path details",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Skillcast User ID"
+          },
+          {
+            "name": "lpId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Learning Path ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/StandardSuccess"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "405": {
+            "$ref": "#/components/responses/MethodNotAllowed"
+          },
+          "422": {
+            "$ref": "#/components/responses/ValidationError"
+          }
+        }
+      }
+    },
+    "/employees/{userId}/cpd/{year}": {
+      "get": {
+        "tags": ["Employees"],
+        "summary": "Get employee CPD records for a year",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Skillcast User ID"
+          },
+          {
+            "name": "year",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "number"
+            },
+            "description": "Year"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/StandardSuccess"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "405": {
+            "$ref": "#/components/responses/MethodNotAllowed"
+          },
+          "422": {
+            "$ref": "#/components/responses/ValidationError"
+          }
+        }
+      }
+    },
+    "/employees/{userId}/cpd/{year}/{cpdId}": {
+      "get": {
+        "tags": ["Employees"],
+        "summary": "Get employee CPD scheme details",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Skillcast User ID"
+          },
+          {
+            "name": "year",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "number"
+            },
+            "description": "Year"
+          },
+          {
+            "name": "cpdId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "CPD scheme ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/StandardSuccess"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "405": {
+            "$ref": "#/components/responses/MethodNotAllowed"
+          },
+          "422": {
+            "$ref": "#/components/responses/ValidationError"
+          }
+        }
+      }
+    },
+    "/employees/{userId}/activities": {
+      "get": {
+        "tags": ["Employees"],
+        "summary": "Get employee activities",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Skillcast User ID"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "number"
+            },
+            "description": "Maximum number of records to return"
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "number"
+            },
+            "description": "First record to return"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/StandardSuccess"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "405": {
+            "$ref": "#/components/responses/MethodNotAllowed"
+          },
+          "422": {
+            "$ref": "#/components/responses/ValidationError"
+          }
+        }
+      }
+    },
+    "/employees/{userId}/activities/states": {
+      "get": {
+        "tags": ["Employees"],
+        "summary": "Get employee activity states",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Skillcast User ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/StandardSuccess"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "405": {
+            "$ref": "#/components/responses/MethodNotAllowed"
+          },
+          "422": {
+            "$ref": "#/components/responses/ValidationError"
+          }
+        }
+      }
+    },
+    "/employees/{userId}/activities/states/{statusCode}": {
+      "get": {
+        "tags": ["Employees"],
+        "summary": "Get employee activities by state",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Skillcast User ID"
+          },
+          {
+            "name": "statusCode",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "State"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/StandardSuccess"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "405": {
+            "$ref": "#/components/responses/MethodNotAllowed"
+          },
+          "422": {
+            "$ref": "#/components/responses/ValidationError"
+          }
+        }
+      }
+    },
+    "/employees/{userId}/activities/titles": {
+      "get": {
+        "tags": ["Employees"],
+        "summary": "Get employee activity titles",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Skillcast User ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/StandardSuccess"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "405": {
+            "$ref": "#/components/responses/MethodNotAllowed"
+          },
+          "422": {
+            "$ref": "#/components/responses/ValidationError"
+          }
+        }
+      }
+    },
+    "/employees/{userId}/activities/titles/{scoId}": {
+      "get": {
+        "tags": ["Employees"],
+        "summary": "Get employee activities by title",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Skillcast User ID"
+          },
+          {
+            "name": "scoId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Activity ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/StandardSuccess"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "405": {
+            "$ref": "#/components/responses/MethodNotAllowed"
+          },
+          "422": {
+            "$ref": "#/components/responses/ValidationError"
+          }
+        }
+      }
+    },
+    "/assignments": {
+      "post": {
+        "tags": ["Assignments"],
+        "summary": "Get assignment data",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "number"
+            },
+            "description": "Maximum number of records to return"
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "number"
+            },
+            "description": "First record to return"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/filters"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/StandardSuccess"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "405": {
+            "$ref": "#/components/responses/MethodNotAllowed"
+          },
+          "422": {
+            "$ref": "#/components/responses/ValidationError"
+          }
+        }
+      }
+    },
+    "/assignments/states": {
+      "post": {
+        "tags": ["Assignments"],
+        "summary": "Get assignment states",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/filters"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/StandardSuccess"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "405": {
+            "$ref": "#/components/responses/MethodNotAllowed"
+          },
+          "422": {
+            "$ref": "#/components/responses/ValidationError"
+          }
+        }
+      }
+    },
+    "/assignments/states/{statusCode}": {
+      "post": {
+        "tags": ["Assignments"],
+        "summary": "Get assignments by state",
+        "parameters": [
+          {
+            "name": "statusCode",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "State"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/filters"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/StandardSuccess"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "405": {
+            "$ref": "#/components/responses/MethodNotAllowed"
+          },
+          "422": {
+            "$ref": "#/components/responses/ValidationError"
+          }
+        }
+      }
+    },
+    "/assignments/titles": {
+      "post": {
+        "tags": ["Assignments"],
+        "summary": "Get assignment titles",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/filters"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/StandardSuccess"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "405": {
+            "$ref": "#/components/responses/MethodNotAllowed"
+          },
+          "422": {
+            "$ref": "#/components/responses/ValidationError"
+          }
+        }
+      }
+    },
+    "/assignments/titles/{scoId}": {
+      "post": {
+        "tags": ["Assignments"],
+        "summary": "Get assignments by title",
+        "parameters": [
+          {
+            "name": "scoId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Activity ID"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/filters"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/StandardSuccess"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "405": {
+            "$ref": "#/components/responses/MethodNotAllowed"
+          },
+          "422": {
+            "$ref": "#/components/responses/ValidationError"
+          }
+        }
+      }
+    },
+    "/cpd/{year}": {
+      "post": {
+        "tags": ["CPD"],
+        "summary": "Get CPD data for a year",
+        "parameters": [
+          {
+            "name": "year",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "number"
+            },
+            "description": "Year"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/filters"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/StandardSuccess"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "405": {
+            "$ref": "#/components/responses/MethodNotAllowed"
+          },
+          "422": {
+            "$ref": "#/components/responses/ValidationError"
+          }
+        }
+      }
+    },
+    "/cpd/{year}/{cpdId}": {
+      "post": {
+        "tags": ["CPD"],
+        "summary": "Get CPD scheme data",
+        "parameters": [
+          {
+            "name": "year",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "number"
+            },
+            "description": "Year"
+          },
+          {
+            "name": "cpdId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "CPD scheme ID"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/filters"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/StandardSuccess"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "405": {
+            "$ref": "#/components/responses/MethodNotAllowed"
+          },
+          "422": {
+            "$ref": "#/components/responses/ValidationError"
+          }
+        }
+      }
+    },
+    "/policies": {
+      "post": {
+        "tags": ["Policies"],
+        "summary": "Get policy data",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "number"
+            },
+            "description": "Maximum number of records to return"
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "number"
+            },
+            "description": "First record to return"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/filters"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/StandardSuccess"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "405": {
+            "$ref": "#/components/responses/MethodNotAllowed"
+          },
+          "422": {
+            "$ref": "#/components/responses/ValidationError"
+          }
+        }
+      }
+    },
+    "/policies/states": {
+      "post": {
+        "tags": ["Policies"],
+        "summary": "Get policy states",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/filters"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/StandardSuccess"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "405": {
+            "$ref": "#/components/responses/MethodNotAllowed"
+          },
+          "422": {
+            "$ref": "#/components/responses/ValidationError"
+          }
+        }
+      }
+    },
+    "/policies/states/{statusCode}": {
+      "post": {
+        "tags": ["Policies"],
+        "summary": "Get policies by state",
+        "parameters": [
+          {
+            "name": "statusCode",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "State"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/filters"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/StandardSuccess"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "405": {
+            "$ref": "#/components/responses/MethodNotAllowed"
+          },
+          "422": {
+            "$ref": "#/components/responses/ValidationError"
+          }
+        }
+      }
+    },
+    "/policies/titles": {
+      "post": {
+        "tags": ["Policies"],
+        "summary": "Get policy titles",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/filters"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/StandardSuccess"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "405": {
+            "$ref": "#/components/responses/MethodNotAllowed"
+          },
+          "422": {
+            "$ref": "#/components/responses/ValidationError"
+          }
+        }
+      }
+    },
+    "/policies/titles/{scoId}": {
+      "post": {
+        "tags": ["Policies"],
+        "summary": "Get policies by title",
+        "parameters": [
+          {
+            "name": "scoId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Activity ID"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/filters"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/StandardSuccess"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "405": {
+            "$ref": "#/components/responses/MethodNotAllowed"
+          },
+          "422": {
+            "$ref": "#/components/responses/ValidationError"
+          }
+        }
+      }
+    },
+    "/events": {
+      "post": {
+        "tags": ["Events"],
+        "summary": "Get event data",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "number"
+            },
+            "description": "Maximum number of records to return"
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "number"
+            },
+            "description": "First record to return"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/filters"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/StandardSuccess"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "405": {
+            "$ref": "#/components/responses/MethodNotAllowed"
+          },
+          "422": {
+            "$ref": "#/components/responses/ValidationError"
+          }
+        }
+      }
+    },
+    "/events/states": {
+      "post": {
+        "tags": ["Events"],
+        "summary": "Get event states",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/filters"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/StandardSuccess"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "405": {
+            "$ref": "#/components/responses/MethodNotAllowed"
+          },
+          "422": {
+            "$ref": "#/components/responses/ValidationError"
+          }
+        }
+      }
+    },
+    "/events/states/{statusCode}": {
+      "post": {
+        "tags": ["Events"],
+        "summary": "Get events by state",
+        "parameters": [
+          {
+            "name": "statusCode",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "State"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/filters"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/StandardSuccess"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "405": {
+            "$ref": "#/components/responses/MethodNotAllowed"
+          },
+          "422": {
+            "$ref": "#/components/responses/ValidationError"
+          }
+        }
+      }
+    },
+    "/events/titles": {
+      "post": {
+        "tags": ["Events"],
+        "summary": "Get event titles",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/filters"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/StandardSuccess"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "405": {
+            "$ref": "#/components/responses/MethodNotAllowed"
+          },
+          "422": {
+            "$ref": "#/components/responses/ValidationError"
+          }
+        }
+      }
+    },
+    "/events/titles/{scoId}": {
+      "post": {
+        "tags": ["Events"],
+        "summary": "Get events by title",
+        "parameters": [
+          {
+            "name": "scoId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Activity ID"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/filters"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/StandardSuccess"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "405": {
+            "$ref": "#/components/responses/MethodNotAllowed"
+          },
+          "422": {
+            "$ref": "#/components/responses/ValidationError"
+          }
+        }
+      }
+    },
+    "/offline": {
+      "post": {
+        "tags": ["Offline activities"],
+        "summary": "Get offline activity data",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "number"
+            },
+            "description": "Maximum number of records to return"
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "number"
+            },
+            "description": "First record to return"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/filters"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/StandardSuccess"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "405": {
+            "$ref": "#/components/responses/MethodNotAllowed"
+          },
+          "422": {
+            "$ref": "#/components/responses/ValidationError"
+          }
+        }
+      }
+    },
+    "/offline/states": {
+      "post": {
+        "tags": ["Offline activities"],
+        "summary": "Get offline activity states",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/filters"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/StandardSuccess"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "405": {
+            "$ref": "#/components/responses/MethodNotAllowed"
+          },
+          "422": {
+            "$ref": "#/components/responses/ValidationError"
+          }
+        }
+      }
+    },
+    "/offline/states/{statusCode}": {
+      "post": {
+        "tags": ["Offline activities"],
+        "summary": "Get offline activities by state",
+        "parameters": [
+          {
+            "name": "statusCode",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "State"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/filters"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/StandardSuccess"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "405": {
+            "$ref": "#/components/responses/MethodNotAllowed"
+          },
+          "422": {
+            "$ref": "#/components/responses/ValidationError"
+          }
+        }
+      }
+    },
+    "/offline/titles": {
+      "post": {
+        "tags": ["Offline activities"],
+        "summary": "Get offline activity titles",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/filters"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/StandardSuccess"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "405": {
+            "$ref": "#/components/responses/MethodNotAllowed"
+          },
+          "422": {
+            "$ref": "#/components/responses/ValidationError"
+          }
+        }
+      }
+    },
+    "/offline/titles/{scoId}": {
+      "post": {
+        "tags": ["Offline activities"],
+        "summary": "Get offline activities by title",
+        "parameters": [
+          {
+            "name": "scoId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Activity ID"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/filters"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/StandardSuccess"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "405": {
+            "$ref": "#/components/responses/MethodNotAllowed"
+          },
+          "422": {
+            "$ref": "#/components/responses/ValidationError"
+          }
+        }
+      }
+    },
+    "/assessments": {
+      "post": {
+        "tags": ["Assessments"],
+        "summary": "Get assessment data",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/filters"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/StandardSuccess"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "405": {
+            "$ref": "#/components/responses/MethodNotAllowed"
+          },
+          "422": {
+            "$ref": "#/components/responses/ValidationError"
+          }
+        }
+      }
+    },
+    "/assessments/{scoId}": {
+      "post": {
+        "tags": ["Assessments"],
+        "summary": "Get assessment by ID",
+        "parameters": [
+          {
+            "name": "scoId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Activity ID"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/filters"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/StandardSuccess"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "405": {
+            "$ref": "#/components/responses/MethodNotAllowed"
+          },
+          "422": {
+            "$ref": "#/components/responses/ValidationError"
+          }
+        }
+      }
+    }
+  }
+}
