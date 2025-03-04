@@ -1,0 +1,1186 @@
+{
+  "info": {
+    "name": "Skillcast Reporting API",
+    "description": "This API is used to access reporting data from your Skillcast instance",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_postman_id": "skillcast-reporting-api-collection"
+  },
+  "item": [
+    {
+      "name": "E-learning",
+      "item": [
+        {
+          "name": "Get e-learning records",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/elearning?limit=10&offset=0",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "elearning"
+              ],
+              "query": [
+                {
+                  "key": "limit",
+                  "value": "10",
+                  "description": "Maximum number of records to return"
+                },
+                {
+                  "key": "offset",
+                  "value": "0",
+                  "description": "First record to return"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"filters\": {\n    \"keyword\": \"search term\"\n  }\n}"
+            },
+            "description": "Get e-learning records"
+          }
+        },
+        {
+          "name": "Get e-learning states",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/elearning/states",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "elearning",
+                "states"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"filters\": {\n    \"keyword\": \"search term\"\n  }\n}"
+            },
+            "description": "Get e-learning states"
+          }
+        },
+        {
+          "name": "Get e-learning by status",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/elearning/states/:statusCode",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "elearning",
+                "states",
+                ":statusCode"
+              ],
+              "variable": [
+                {
+                  "key": "statusCode",
+                  "value": "completed",
+                  "description": "State"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"filters\": {\n    \"keyword\": \"search term\"\n  }\n}"
+            },
+            "description": "Get e-learning by status"
+          }
+        },
+        {
+          "name": "Get e-learning titles",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/elearning/titles",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "elearning",
+                "titles"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"filters\": {\n    \"keyword\": \"search term\"\n  }\n}"
+            },
+            "description": "Get e-learning titles"
+          }
+        },
+        {
+          "name": "Get e-learning by title ID",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/elearning/titles/:scoId",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "elearning",
+                "titles",
+                ":scoId"
+              ],
+              "variable": [
+                {
+                  "key": "scoId",
+                  "value": "123",
+                  "description": "Activity ID"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"filters\": {\n    \"keyword\": \"search term\"\n  }\n}"
+            },
+            "description": "Get e-learning by title ID"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Employees",
+      "item": [
+        {
+          "name": "Get employee data",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/employees",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "employees"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"filters\": {\n    \"keyword\": \"search term\"\n  }\n}"
+            },
+            "description": "Get employee data"
+          }
+        },
+        {
+          "name": "Get employee by ID",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/employees/:userId",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "employees",
+                ":userId"
+              ],
+              "variable": [
+                {
+                  "key": "userId",
+                  "value": "123",
+                  "description": "User ID"
+                }
+              ]
+            },
+            "description": "Get employee by ID"
+          }
+        },
+        {
+          "name": "Get employee assignments",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/employees/:userId/assignments?limit=10&offset=0",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "employees",
+                ":userId",
+                "assignments"
+              ],
+              "query": [
+                {
+                  "key": "limit",
+                  "value": "10",
+                  "description": "Maximum number of records to return"
+                },
+                {
+                  "key": "offset",
+                  "value": "0",
+                  "description": "First record to return"
+                }
+              ],
+              "variable": [
+                {
+                  "key": "userId",
+                  "value": "123",
+                  "description": "User ID"
+                }
+              ]
+            },
+            "description": "Get employee assignments"
+          }
+        },
+        {
+          "name": "Get employee assignment states",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/employees/:userId/assignments/states",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "employees",
+                ":userId",
+                "assignments",
+                "states"
+              ],
+              "variable": [
+                {
+                  "key": "userId",
+                  "value": "123",
+                  "description": "User ID"
+                }
+              ]
+            },
+            "description": "Get employee assignment states"
+          }
+        },
+        {
+          "name": "Get employee assignments by state",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/employees/:userId/assignments/states/:status",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "employees",
+                ":userId",
+                "assignments",
+                "states",
+                ":status"
+              ],
+              "variable": [
+                {
+                  "key": "userId",
+                  "value": "123",
+                  "description": "User ID"
+                },
+                {
+                  "key": "status",
+                  "value": "completed",
+                  "description": "State"
+                }
+              ]
+            },
+            "description": "Get employee assignments by state"
+          }
+        },
+        {
+          "name": "Get employee learning paths",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/employees/:userId/assignments/learningpaths",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "employees",
+                ":userId",
+                "assignments",
+                "learningpaths"
+              ],
+              "variable": [
+                {
+                  "key": "userId",
+                  "value": "123",
+                  "description": "User ID"
+                }
+              ]
+            },
+            "description": "Get employee learning paths"
+          }
+        },
+        {
+          "name": "Get employee learning path details",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/employees/:userId/assignments/learningpaths/:lpId",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "employees",
+                ":userId",
+                "assignments",
+                "learningpaths",
+                ":lpId"
+              ],
+              "variable": [
+                {
+                  "key": "userId",
+                  "value": "123",
+                  "description": "User ID"
+                },
+                {
+                  "key": "lpId",
+                  "value": "456",
+                  "description": "Learning Path ID"
+                }
+              ]
+            },
+            "description": "Get employee learning path details"
+          }
+        },
+        {
+          "name": "Get employee CPD records for a year",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/employees/:userId/cpd/:year",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "employees",
+                ":userId",
+                "cpd",
+                ":year"
+              ],
+              "variable": [
+                {
+                  "key": "userId",
+                  "value": "123",
+                  "description": "User ID"
+                },
+                {
+                  "key": "year",
+                  "value": "2024",
+                  "description": "Year"
+                }
+              ]
+            },
+            "description": "Get employee CPD records for a year"
+          }
+        },
+        {
+          "name": "Get employee CPD scheme details",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/employees/:userId/cpd/:year/:cpdId",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "employees",
+                ":userId",
+                "cpd",
+                ":year",
+                ":cpdId"
+              ],
+              "variable": [
+                {
+                  "key": "userId",
+                  "value": "123",
+                  "description": "User ID"
+                },
+                {
+                  "key": "year",
+                  "value": "2024",
+                  "description": "Year"
+                },
+                {
+                  "key": "cpdId",
+                  "value": "789",
+                  "description": "CPD scheme ID"
+                }
+              ]
+            },
+            "description": "Get employee CPD scheme details"
+          }
+        },
+        {
+          "name": "Get employee activities",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/employees/:userId/activities?limit=10&offset=0",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "employees",
+                ":userId",
+                "activities"
+              ],
+              "query": [
+                {
+                  "key": "limit",
+                  "value": "10",
+                  "description": "Maximum number of records to return"
+                },
+                {
+                  "key": "offset",
+                  "value": "0",
+                  "description": "First record to return"
+                }
+              ],
+              "variable": [
+                {
+                  "key": "userId",
+                  "value": "123",
+                  "description": "User ID"
+                }
+              ]
+            },
+            "description": "Get employee activities"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Assignments",
+      "item": [
+        {
+          "name": "Get assignment data",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/assignments?limit=10&offset=0",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "assignments"
+              ],
+              "query": [
+                {
+                  "key": "limit",
+                  "value": "10",
+                  "description": "Maximum number of records to return"
+                },
+                {
+                  "key": "offset",
+                  "value": "0",
+                  "description": "First record to return"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"filters\": {\n    \"keyword\": \"search term\"\n  }\n}"
+            },
+            "description": "Get assignment data"
+          }
+        }
+      ]
+    },
+    {
+      "name": "CPD",
+      "item": [
+        {
+          "name": "Get CPD data for a year",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/cpd/:year",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "cpd",
+                ":year"
+              ],
+              "variable": [
+                {
+                  "key": "year",
+                  "value": "2024",
+                  "description": "Year"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"filters\": {\n    \"keyword\": \"search term\"\n  }\n}"
+            },
+            "description": "Get CPD data for a year"
+          }
+        },
+        {
+          "name": "Get CPD scheme data",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/cpd/:year/:cpdId",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "cpd",
+                ":year",
+                ":cpdId"
+              ],
+              "variable": [
+                {
+                  "key": "year",
+                  "value": "2024",
+                  "description": "Year"
+                },
+                {
+                  "key": "cpdId",
+                  "value": "789",
+                  "description": "CPD scheme ID"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"filters\": {\n    \"keyword\": \"search term\"\n  }\n}"
+            },
+            "description": "Get CPD scheme data"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Policies",
+      "item": [
+        {
+          "name": "Get policy data",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/policies?limit=10&offset=0",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "policies"
+              ],
+              "query": [
+                {
+                  "key": "limit",
+                  "value": "10",
+                  "description": "Maximum number of records to return"
+                },
+                {
+                  "key": "offset",
+                  "value": "0",
+                  "description": "First record to return"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"filters\": {\n    \"keyword\": \"search term\"\n  }\n}"
+            },
+            "description": "Get policy data"
+          }
+        },
+        {
+          "name": "Get policy states",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/policies/states",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "policies",
+                "states"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"filters\": {\n    \"keyword\": \"search term\"\n  }\n}"
+            },
+            "description": "Get policy states"
+          }
+        },
+        {
+          "name": "Get policies by state",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/policies/states/:statusCode",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "policies",
+                "states",
+                ":statusCode"
+              ],
+              "variable": [
+                {
+                  "key": "statusCode",
+                  "value": "completed",
+                  "description": "State"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"filters\": {\n    \"keyword\": \"search term\"\n  }\n}"
+            },
+            "description": "Get policies by state"
+          }
+        },
+        {
+          "name": "Get policy titles",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/policies/titles",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "policies",
+                "titles"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"filters\": {\n    \"keyword\": \"search term\"\n  }\n}"
+            },
+            "description": "Get policy titles"
+          }
+        },
+        {
+          "name": "Get policies by title",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/policies/titles/:scoId",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "policies",
+                "titles",
+                ":scoId"
+              ],
+              "variable": [
+                {
+                  "key": "scoId",
+                  "value": "123",
+                  "description": "Activity ID"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"filters\": {\n    \"keyword\": \"search term\"\n  }\n}"
+            },
+            "description": "Get policies by title"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Events",
+      "item": [
+        {
+          "name": "Get event data",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/events?limit=10&offset=0",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "events"
+              ],
+              "query": [
+                {
+                  "key": "limit",
+                  "value": "10",
+                  "description": "Maximum number of records to return"
+                },
+                {
+                  "key": "offset",
+                  "value": "0",
+                  "description": "First record to return"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"filters\": {\n    \"keyword\": \"search term\"\n  }\n}"
+            },
+            "description": "Get event data"
+          }
+        },
+        {
+          "name": "Get event states",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/events/states",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "events",
+                "states"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"filters\": {\n    \"keyword\": \"search term\"\n  }\n}"
+            },
+            "description": "Get event states"
+          }
+        },
+        {
+          "name": "Get events by state",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/events/states/:statusCode",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "events",
+                "states",
+                ":statusCode"
+              ],
+              "variable": [
+                {
+                  "key": "statusCode",
+                  "value": "completed",
+                  "description": "State"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"filters\": {\n    \"keyword\": \"search term\"\n  }\n}"
+            },
+            "description": "Get events by state"
+          }
+        },
+        {
+          "name": "Get event titles",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/events/titles",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "events",
+                "titles"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"filters\": {\n    \"keyword\": \"search term\"\n  }\n}"
+            },
+            "description": "Get event titles"
+          }
+        },
+        {
+          "name": "Get events by title",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/events/titles/:scoId",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "events",
+                "titles",
+                ":scoId"
+              ],
+              "variable": [
+                {
+                  "key": "scoId",
+                  "value": "123",
+                  "description": "Activity ID"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"filters\": {\n    \"keyword\": \"search term\"\n  }\n}"
+            },
+            "description": "Get events by title"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Offline Activities",
+      "item": [
+        {
+          "name": "Get offline activity data",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/offline?limit=10&offset=0",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "offline"
+              ],
+              "query": [
+                {
+                  "key": "limit",
+                  "value": "10",
+                  "description": "Maximum number of records to return"
+                },
+                {
+                  "key": "offset",
+                  "value": "0",
+                  "description": "First record to return"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"filters\": {\n    \"keyword\": \"search term\"\n  }\n}"
+            },
+            "description": "Get offline activity data"
+          }
+        },
+        {
+          "name": "Get offline activity states",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/offline/states",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "offline",
+                "states"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"filters\": {\n    \"keyword\": \"search term\"\n  }\n}"
+            },
+            "description": "Get offline activity states"
+          }
+        },
+        {
+          "name": "Get offline activities by state",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/offline/states/:statusCode",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "offline",
+                "states",
+                ":statusCode"
+              ],
+              "variable": [
+                {
+                  "key": "statusCode",
+                  "value": "completed",
+                  "description": "State"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"filters\": {\n    \"keyword\": \"search term\"\n  }\n}"
+            },
+            "description": "Get offline activities by state"
+          }
+        },
+        {
+          "name": "Get offline activity titles",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/offline/titles",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "offline",
+                "titles"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"filters\": {\n    \"keyword\": \"search term\"\n  }\n}"
+            },
+            "description": "Get offline activity titles"
+          }
+        },
+        {
+          "name": "Get offline activities by title",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/offline/titles/:scoId",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "offline",
+                "titles",
+                ":scoId"
+              ],
+              "variable": [
+                {
+                  "key": "scoId",
+                  "value": "123",
+                  "description": "Activity ID"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"filters\": {\n    \"keyword\": \"search term\"\n  }\n}"
+            },
+            "description": "Get offline activities by title"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Assessments",
+      "item": [
+        {
+          "name": "Get assessment data",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/assessments",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "assessments"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"filters\": {\n    \"keyword\": \"search term\"\n  }\n}"
+            },
+            "description": "Get assessment data"
+          }
+        },
+        {
+          "name": "Get assessment by ID",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/assessments/:scoId",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "assessments",
+                ":scoId"
+              ],
+              "variable": [
+                {
+                  "key": "scoId",
+                  "value": "123",
+                  "description": "Assessment ID"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"filters\": {\n    \"keyword\": \"search term\"\n  }\n}"
+            },
+            "description": "Get assessment by ID"
+          }
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://clientCode.skillcast.io/api/reporting/v1",
+      "type": "string",
+      "description": "Base URL for the API"
+    }
+  ]
+} 
